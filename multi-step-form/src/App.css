@@ -1,0 +1,282 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: hsl(217, 100%, 97%);
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  width: 900px;
+  max-width: 100%;
+  display: flex;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  background: hsl(243, 100%, 62%);
+  color: white;
+  padding: 30px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.step span {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.step.active span {
+  background: hsl(206, 94%, 87%);
+  color: black;
+  border: none;
+}
+
+.step-title {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.step-desc {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Form Section */
+.form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-section h1 {
+  margin-bottom: 10px;
+  color: hsl(213, 96%, 18%);
+}
+
+.form-section p {
+  margin-bottom: 30px;
+  color: hsl(231, 11%, 63%);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid hsl(229, 24%, 87%);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: hsl(243, 100%, 62%);
+}
+
+.next-btn {
+  margin-top: 20px;
+  align-self: flex-end;
+  padding: 10px 20px;
+  background: hsl(213, 96%, 18%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.next-btn:hover {
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .step-desc,
+  .step-title {
+    display: none;
+  }
+
+  .form-section {
+    padding: 25px;
+  }
+}
+.button-group {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: gray;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  color: black;
+}
+
+.plan-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.plan-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.plan-card.selected {
+  border: 2px solid hsl(243, 100%, 62%);
+}
+
+.addon {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.form-section input {
+  margin-bottom: 15px;
+  padding: 8px;
+  width: 100%;
+}
+.step-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.step-content {
+  animation: slide 0.4s ease;
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.switch {
+  width: 45px;
+  height: 22px;
+  background: hsl(213, 96%, 18%);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.circle {
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  transition: 0.3s;
+}
+
+.switch.yearly .circle {
+  transform: translateX(22px);
+}
+.addon-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.addon-card:hover {
+  border-color: hsl(243, 100%, 62%);
+}
+
+.addon-card.selected {
+  border: 2px solid hsl(243, 100%, 62%);
+  background: hsl(231, 100%, 99%);
+}
+
+.summary-box {
+  background: hsl(231, 100%, 99%);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.summary-addon {
+  font-size: 14px;
+  color: gray;
+}
