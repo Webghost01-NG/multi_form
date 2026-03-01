@@ -3,7 +3,7 @@ import "./App.css"
 
 function App() {
   const [step, setStep] = useState(1)
-  const [error, setError] = useState("")
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,60 +20,31 @@ function App() {
   }
 
   const addonsList = [
-    {
-      name: "Online service",
-      description: "Access to multiplayer games",
-      monthly: 1,
-      yearly: 10
-    },
-    {
-      name: "Larger storage",
-      description: "Extra 1TB of cloud save",
-      monthly: 2,
-      yearly: 20
-    },
-    {
-      name: "Customizable profile",
-      description: "Custom theme on your profile",
-      monthly: 2,
-      yearly: 20
-    }
+    { name: "Online service", monthly: 1, yearly: 10 },
+    { name: "Larger storage", monthly: 2, yearly: 20 },
+    { name: "Customizable profile", monthly: 2, yearly: 20 }
   ]
 
-  const validateStepOne = () => {
-    if (!formData.name  !formData.email  !formData.phone) {
-      setError("All fields are required")
-      return false
-    }
-    const emailPattern = /\S+@\S+\.\S+/
-    if (!emailPattern.test(formData.email)) {
-      setError("Enter a valid email")
-      return false
-    }
-    setError("")
-    return true
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const toggleAddon = (addonName) => {
-    if (formData.addons.includes(addonName)) {
+  const toggleAddon = (addon) => {
+    if (formData.addons.includes(addon)) {
       setFormData({
         ...formData,
-        addons: formData.addons.filter(a => a !== addonName)
+        addons: formData.addons.filter(a => a !== addon)
       })
     } else {
       setFormData({
         ...formData,
-        addons: [...formData.addons, addonName]
+        addons: [...formData.addons, addon]
       })
     }
   }
 
-  const nextStep = () => {
-    if (step === 1 && !validateStepOne()) return
-    setStep(prev => prev + 1)
-  }
-
-  const prevStep = () => setStep(prev => prev - 1)
+  const nextStep = () => step < 5 && setStep(step + 1)
+  const prevStep = () => step > 1 && setStep(step - 1)
 
   const total =
     plans[formData.plan][formData.billing] +
@@ -86,6 +57,7 @@ function App() {
     <div className="container">
       <div className="card">
 
+        {/* Sidebar */}
         <div className="sidebar">
           {[1,2,3,4].map(num => (
             <div key={num} className={`step ${step === num ? "active" : ""}`}>
@@ -98,106 +70,105 @@ function App() {
         </div>
 
         <div className="form-section">
-          <div className="step-content">
 
-            {step === 1 && (
-              <>
-                <h1>Personal Info</h1>
-                {error && <p className="error">{error}</p>}
-                <input
-                  placeholder="Name"
-                  value={formData.name}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
-                />
-                <input
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={e => setFormData({...formData, email: e.target.value})}
-                />
-                <input
-                  placeholder="Phone"
-                  value={formData.phone}
-                  onChange={e => setFormData({...formData, phone: e.target.value})}
-                />
-              </>
-            )}
+          {/* STEP 1 */}
+          {step === 1 && (
+            <>
+              <h1>Personal Info</h1>
+              <input name="name" placeholder="Name" onChange={handleChange} />
+              <input name="email" placeholder="Email" onChange={handleChange} />
+              <input name="phone" placeholder="Phone" onChange={handleChange} />
+            </>
+          )}
 
-            {step === 2 && (
-              <>
-                <h1>Select Your Plan</h1>
-                <div className="plan-container">
-                  {Object.keys(plans).map(plan => (
-                    <div
-                      key={plan}
-                      className={`plan-card ${formData.plan === plan ? "selected" : ""}`}
-                      onClick={() => setFormData({...formData, plan})}
-                    >
-                      <h3>{plan}</h3>
-                      <p>
-                        ${plans[plan][formData.billing]}/
-                        {formData.billing === "monthly" ? "mo" : "yr"}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+          {/* STEP 2 */}
+          {step === 2 && (
+            <>
+              <h1>Select Plan</h1>
 
-            {step === 3 && (
-              <>
-                <h1>Pick add-ons</h1>
-
-                {addonsList.map(addon => (
-                  <divkey={addon.name}
-                    className={`addon-card ${
-                      formData.addons.includes(addon.name) ? "selected" : ""
-                    }`}
-                    onClick={() => toggleAddon(addon.name)}
+              <div className="plan-container">
+                {Object.keys(plans).map(plan => (
+                  <div
+                    key={plan}
+                    className={`plan-card ${formData.plan === plan ? "selected" : ""}`}
+                    onClick={() => setFormData({ ...formData, plan })}
                   >
-                    <div>
-                      <h4>{addon.name}</h4>
-                      <p>{addon.description}</p>
-                    </div>
-
-                    <span>
-                      +${addon[formData.billing]}/
+                    <h3>{plan}</h3>
+                    <p>
+                      ${plans[plan][formData.billing]}/
                       {formData.billing === "monthly" ? "mo" : "yr"}
-                    </span>
+                    </p>
                   </div>
                 ))}
-              </>
-            )}
+              </div>
 
-            {step === 4 && (
-              <>
-                <h1>Summary</h1>
+              <button
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    billing: formData.billing === "monthly" ? "yearly" : "monthly"
+                  })
+                }
+              >
+                Toggle Billing ({formData.billing})
+              </button>
+            </>
+          )}
 
-                <div className="summary-box">
-                  <p>
-                    {formData.plan} ({formData.billing})
-                  </p>
+          {/* STEP 3 */}
+          {step === 3 && (
+            <>
+              <h1>Add-ons</h1>
 
-                  {formData.addons.map(addon => (
-                    <p key={addon} className="summary-addon">
-                      {addon}
-                    </p>
-                  ))}
+              {addonsList.map(addon => (
+                <div key={addon.name} className="addon">
+                  <input
+                    type="checkbox"
+                    checked={formData.addons.includes(addon.name)}
+                    onChange={() => toggleAddon(addon.name)}
+                  />
+                  <span>{addon.name}</span>
+                  <span>
+                    +${addon[formData.billing]}/
+                    {formData.billing === "monthly" ? "mo" : "yr"}
+                  </span>
                 </div>
+              ))}
+            </>
+          )}
 
-                <h3>
-                  Total: ${total}/
-                  {formData.billing === "monthly" ? "mo" : "yr"}
-                </h3>
-              </>
-            )}
+          {/* STEP 4 */}
+          {step === 4 && (
+            <>
+              <h1>Summary</h1>
+              <p><strong>Name:</strong> {formData.name}</p>
+              <p><strong>Plan:</strong> {formData.plan} ({formData.billing})</p>
+              <p><strong>Add-ons:</strong></p>
+              {formData.addons.map(a => <p key={a}>• {a}</p>)}
+              <h3>Total: ${total}/{formData.billing === "monthly" ? "mo" : "yr"}</h3>
+            </>
+          )}
 
-          </div>
+          {/* STEP 5 */}
+          {step === 5 && (
+            <>
+              <h1>Thank You!</h1>
+              <p>Your subscription has been confirmed 🎉</p>
+            </>
+          )}
 
           <div className="button-group">
-            {step > 1 && <button onClick={prevStep}>Go Back</button>}
-            {step < 4 && <button onClick={nextStep}>Next</button>}
-            {step === 4 && <button>Confirm</button>}
+            {step > 1 && step < 5 && (
+              <button onClick={prevStep}>Back</button>
+            )}
+            {step < 4 && (
+              <button onClick={nextStep}>Next</button>
+            )}
+            {step === 4 && (
+              <button onClick={nextStep}>Confirm</button>
+            )}
           </div>
+
         </div>
       </div>
     </div>

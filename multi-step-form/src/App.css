@@ -147,8 +147,7 @@ body {
   .form-section {
     padding: 25px;
   }
-}
-.button-group {
+}.button-group {
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
@@ -163,9 +162,7 @@ body {
 
 .back-btn:hover {
   color: black;
-}
-
-.plan-container {
+}.plan-container {
   display: flex;
   gap: 15px;
   margin-bottom: 20px;
@@ -193,90 +190,4 @@ body {
   margin-bottom: 15px;
   padding: 8px;
   width: 100%;
-}
-.step-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-.step-content {
-  animation: slide 0.4s ease;
-}
-
-@keyframes slide {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.error {
-  color: red;
-  margin-bottom: 10px;
-}
-
-.toggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.switch {
-  width: 45px;
-  height: 22px;
-  background: hsl(213, 96%, 18%);
-  border-radius: 20px;
-  position: relative;
-  cursor: pointer;
-}
-
-.circle {
-  width: 18px;
-  height: 18px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 3px;
-  transition: 0.3s;
-}
-
-.switch.yearly .circle {
-  transform: translateX(22px);
-}
-.addon-card {
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.addon-card:hover {
-  border-color: hsl(243, 100%, 62%);
-}
-
-.addon-card.selected {
-  border: 2px solid hsl(243, 100%, 62%);
-  background: hsl(231, 100%, 99%);
-}
-
-.summary-box {
-  background: hsl(231, 100%, 99%);
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.summary-addon {
-  font-size: 14px;
-  color: gray;
 }
